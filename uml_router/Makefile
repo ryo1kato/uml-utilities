@@ -9,6 +9,7 @@ BIN_DIR ?= /usr/bin
 ifneq ($(TUNTAP),)
 	OBJS += tuntap.o
 endif
+OBJS := $(sort $(OBJS))
 
 all : $(BIN)
 

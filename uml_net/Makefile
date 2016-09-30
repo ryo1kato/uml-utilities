@@ -11,6 +11,7 @@ OBJS = ethertap.o host.o output.o slip.o uml_net.o
 ifneq ($(TUNTAP),)
 	OBJS += tuntap.o
 endif
+OBJS := $(sort $(OBJS))
 
 all : $(BIN)
 

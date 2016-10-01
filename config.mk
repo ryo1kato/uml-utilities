@@ -40,13 +40,16 @@ $(LIB): $(OBJS)
 clean::
 	rm -f $(OBJS) $(LIB) $(BIN)
 
-install:: $(BIN) $(LIB)
+install:: $(BIN) $(LIB) $(SCRIPT)
 ifndef SKIP_INSTALL
 ifneq ($(BIN),)
 	install -D $(INSTALL_OPTS_$(BIN)) -s $(BIN) $(DESTDIR)$(BIN_DIR)/$(BIN)
 endif
 ifneq ($(LIB),)
 	install -D $(INSTALL_OPTS_$(LIB)) -s $(LIB) $(DESTDIR)$(LIB_DIR)/$(LIB)
+endif
+ifneq ($(SCRIPT),)
+	install -D $(INSTALL_OPTS_$(SCRIPT)) $(SCRIPT) $(DESTDIR)$(BIN_DIR)/$(SCRIPT)
 endif
 endif #SKIP_INSTALL
 

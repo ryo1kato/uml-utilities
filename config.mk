@@ -1,4 +1,20 @@
 # Makefile configurations common for the subdirectories
+# [Variables]
+#   LIB
+#       Static library generated from all *.c files in a (sub)directory.
+#   BIN
+#       Binary executable. Default is to compile all *.c files for the executable
+#       and install into $(DESTIR)/$(BIN_DIR)
+#   OBJS_progname
+#       When more than one executable name is given to $(BIN), object files to be linked
+#       to each of the executables must be specified as this variable.
+#   SCRIPT
+#       A script file. Default is to be installed into $(BIN_DIR)
+#   INSTALL_OPTS_filename
+#       Option(s) for install(1) command spedific to a file (script, exec, or library)
+# [Example]
+#   See moo/Makefile
+#
 
 BIN_DIR  := /usr/bin
 SBIN_DIR := /usr/sbin
@@ -15,7 +31,6 @@ export BIN_DIR LIB_DIR CFLAGS LDFLAGS
 
 TUNTAP   := $(shell [ -e /usr/include/linux/if_tun.h ] && echo -DTUNTAP)
 
-
 #############################################################################
 ##
 ## Only for subdirectories
@@ -29,9 +44,7 @@ SRCS := $(filter-out $(SRCS_TUNTAP),$(SRCS))
 endif
 OBJS ?= $(sort $(SRCS:.c=.o))
 
-
 all:: $(BIN) $(LIB)
-
 
 # default is to use all source(objs) files for the binary,
 # if there's only one name defined in BIN/LIB
@@ -45,15 +58,11 @@ endif
 $(BIN):
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) $(LDFLAGS)
 
-
 $(LIB): $(OBJS)
 	$(AR) r $@ $<
 
-
-
 clean::
 	rm -f $(OBJS) $(LIB) $(BIN) $(foreach bin,$(BIN) $(LIB),$(OBJS_$(bin)))
-
 
 install:: $(BIN) $(LIB) $(SCRIPT)
 ifndef SKIP_INSTALL
@@ -69,8 +78,5 @@ ifneq ($(SCRIPT),)
 endif
 endif #SKIP_INSTALL
 
-
 endif #TOPLEVELMAKEFILE
-
-
 .PHONY: all clean install

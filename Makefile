@@ -23,3 +23,6 @@ tarball : clean spec
 
 spec:
 	sed -e 's/__UMLVER__/$(UMLVER)/' < uml_util.spec.in > uml_util.spec
+
+
+.PHONY: tarball spec

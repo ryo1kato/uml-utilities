@@ -29,21 +29,37 @@ SRCS := $(filter-out $(SRCS_TUNTAP),$(SRCS))
 endif
 OBJS ?= $(sort $(SRCS:.c=.o))
 
+
 all:: $(BIN) $(LIB)
 
-$(BIN): $(OBJS)
+
+# default is to use all source(objs) files for the binary,
+# if there's only one name defined in BIN/LIB
+ifeq ($(words $(BIN) $(LIB)),1)
+  $(BIN): $(OBJS)
+else
+  $(foreach tgt,$(BIN),\
+    $(eval $(tgt): $(OBJS_$(tgt))))
+endif
+
+$(BIN):
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBS) $(LDFLAGS)
+
 
 $(LIB): $(OBJS)
 	$(AR) r $@ $<
 
+
+
 clean::
-	rm -f $(OBJS) $(LIB) $(BIN)
+	rm -f $(OBJS) $(LIB) $(BIN) $(foreach bin,$(BIN) $(LIB),$(OBJS_$(bin)))
+
 
 install:: $(BIN) $(LIB) $(SCRIPT)
 ifndef SKIP_INSTALL
 ifneq ($(BIN),)
-	install -D $(INSTALL_OPTS_$(BIN)) -s $(BIN) $(DESTDIR)$(BIN_DIR)/$(BIN)
+	set -e; $(foreach bin,$(BIN),\
+	  install -D $(INSTALL_OPTS_$(BIN)) -s $(bin) $(DESTDIR)$(BIN_DIR)/$(bin);)
 endif
 ifneq ($(LIB),)
 	install -D $(INSTALL_OPTS_$(LIB)) -s $(LIB) $(DESTDIR)$(LIB_DIR)/$(LIB)
@@ -55,3 +71,6 @@ endif #SKIP_INSTALL
 
 
 endif #TOPLEVELMAKEFILE
+
+
+.PHONY: all clean install

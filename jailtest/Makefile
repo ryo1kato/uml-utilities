@@ -1,2 +1,2 @@
-BIN = jailtest
+BIN := jailtest
 include ../config.mk

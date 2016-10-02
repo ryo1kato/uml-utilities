@@ -1,4 +1,3 @@
-BIN = tunctl
-CFLAGS ?= -g -Wall
+BIN := tunctl
 
 include ../config.mk

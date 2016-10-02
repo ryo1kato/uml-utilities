@@ -1,4 +1,4 @@
-BIN = jail_uml
+BIN := jail_uml
 override BIN_DIR = $(SBIN_DIR)
 
 clean::

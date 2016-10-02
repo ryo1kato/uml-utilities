@@ -13,7 +13,7 @@ CFLAGS   := -g -Wall
 LDFLAGS  :=
 export BIN_DIR LIB_DIR CFLAGS LDFLAGS
 
-TUNTAP := $(shell [ -e /usr/include/linux/if_tun.h ] && echo -DTUNTAP)
+TUNTAP   := $(shell [ -e /usr/include/linux/if_tun.h ] && echo -DTUNTAP)
 
 
 #############################################################################

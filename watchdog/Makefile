@@ -1,2 +1,2 @@
-BIN = uml_watchdog
+BIN := uml_watchdog
 include ../config.mk

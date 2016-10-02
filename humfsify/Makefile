@@ -1,2 +1,2 @@
-SCRIPT = humfsify
+SCRIPT := humfsify
 include ../config.mk

@@ -1,4 +1,4 @@
-TOPLEVELMAKEFILE:=1
+TOPLEVELMAKEFILE := 1
 TUNCTL  := $(shell [ -e /usr/include/linux/if_tun.h ] && echo tunctl)
 
 SUBDIRS := lib jail jailtest humfsify mconsole moo port-helper $(TUNCTL) \

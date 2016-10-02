@@ -1,2 +1,2 @@
-SCRIPT=umlgdb
+SCRIPT := umlgdb
 include ../config.mk
